@@ -1,0 +1,13 @@
+<resources> 
+	<string name="app_name">JDox</string>
+		<string name="invalid">Felaktig Javadoc.</string> 
+			<string name="unable_to_read">Kan ej läsa från externt lagringsutrymme.</string> 
+				<string name="loading">Öppnar...</string> 
+					<string name="extracting">Extraherar från arkiv...</string> 
+						<string name="selectFolder">Välj Denna Mapp</string>
+							<string name="load">Öppna</string>
+								<string name="loadArchive">Öppna Arkiv</string>
+									<string name="loadFolder">Öppna Mapp</string> 
+										<string name="recent">Senast Öppnade</string>
+										<string name="filter_hint">Filtrera Klasser</string> 
+</resources>

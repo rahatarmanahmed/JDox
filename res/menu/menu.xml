@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item 	android:id="@+id/load"
+			android:title="@string/load"
+			android:icon="@drawable/ic_menu_archive"
+			android:showAsAction="always|withText" >
+			
+			<menu>
+				<item 	android:id="@+id/loadArchive"
+						android:title="@string/loadArchive" />
+				<item 	android:id="@+id/loadFolder"
+						android:title="@string/loadFolder" />
+			</menu>
+	</item>
+</menu>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JDox</string>
+	<string name="invalid">Invalid Javadoc.</string>
+	<string name="unable_to_read">Unable to read external storage.</string>
+	<string name="loading">Loading&#8230;</string>
+	<string name="extracting">Extracting from archive.</string>
+	<string name="selectFolder">Select Current Folder</string>
+	<string name="load">Load</string>
+	<string name="loadArchive">Load Archive</string>
+	<string name="loadFolder">Load Folder</string>
+	<string name="recent">Recently Loaded</string>
+	<string name="filter_hint">Filter Classes</string>
+	
+</resources>
