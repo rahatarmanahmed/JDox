@@ -1,12 +1,19 @@
 package com.freek.jdocreader;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
-import android.view.*;
-import android.widget.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 public class FileDialog extends Activity
 {
@@ -32,10 +39,14 @@ public class FileDialog extends Activity
 	boolean showHidden;
 	boolean selectDir;
 	
+	int backButtonStack; // How many times we can press the back button to go up a directory without exiting the dialog
+	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		showHidden = getIntent().getBooleanExtra(SHOW_HIDDEN, false);
 		selectDir = getIntent().getBooleanExtra(SELECT_DIR, false);
+		
+		backButtonStack = 0;
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filedialog);
@@ -54,6 +65,8 @@ public class FileDialog extends Activity
 					File file = files.get(position);
 					if(file.isDirectory())
 					{
+						backButtonStack++;
+						Log.d("JDOX", "Stack++: "+backButtonStack);
 						setCurrentDir(file);
 					}
 					else //if file is... file
@@ -92,8 +105,9 @@ public class FileDialog extends Activity
 	public void setCurrentDir(File dir)
 	{
 		currentDir = dir;
-		this.setTitle(dir.getPath());
-		
+		String title = dir.getName();
+		setTitle(title);
+		Log.d("JDOX", "Title: "+title);
 		files = new ArrayList<File>();
 		for(File f:currentDir.listFiles())
 		{
@@ -109,10 +123,25 @@ public class FileDialog extends Activity
 		filenames = new ArrayList<String>();
 		for(File f:files)
 			filenames.add(f.getName());
-		
 		files.add(0, new File(currentDir.getParent()));
 		filenames.add(0, "..");
+		
+		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filenames);
 		fileList.setAdapter(adapter);
 	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(backButtonStack > 0)
+		{
+			backButtonStack--;
+			Log.d("JDOX", "Stack--: "+backButtonStack);
+			setCurrentDir(currentDir.getParentFile()); //assuming first item is always parent
+		}
+		else
+			super.onBackPressed();
+	}
+	
 }
