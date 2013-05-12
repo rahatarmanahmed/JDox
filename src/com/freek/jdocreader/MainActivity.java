@@ -159,6 +159,14 @@ public class MainActivity extends Activity
 					toast(R.string.unable_to_read);
 				return true;
 				
+			case R.id.loadRecentlyUsed:
+				if(Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+				{
+					Intent intent = new Intent(this, FileDialog.class);
+					intent.putExtra(FileDialog.CHOOSE_RECENTLY_USED, true);
+					startActivityForResult(intent,REQUEST_FILEDIALOG);	
+				}
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);	
 		}

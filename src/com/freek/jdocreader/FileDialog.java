@@ -25,6 +25,8 @@ public class FileDialog extends Activity
 	//optional extras
 	public static final String SHOW_HIDDEN = "com.freek.jdocreader.FileDialog.SHOW_HIDDEN";
 	public static final String SELECT_DIR = "com.freek.jdocreader.FileDialog.SELECT_DIR";
+		/* if this is true, you don't need START_PATH */
+	public static final String CHOOSE_RECENTLY_USED = "com.freek.jdocreader.FileDialog.CHOOSE_RECENTLY_USED";
 	
 	//result extras
 	public static final String RESULT_PATH = "com.freek.jdocreader.FileDialog.RESULT_PATH";
@@ -45,6 +47,7 @@ public class FileDialog extends Activity
 	
 	boolean showHidden;
 	boolean selectDir;
+	boolean chooseRecentlyUsed;
 	
 	int backButtonStack; // How many times we can press the back button to go up a directory without exiting the dialog
 	
@@ -52,6 +55,7 @@ public class FileDialog extends Activity
 	{
 		showHidden = getIntent().getBooleanExtra(SHOW_HIDDEN, false);
 		selectDir = getIntent().getBooleanExtra(SELECT_DIR, false);
+		chooseRecentlyUsed = getIntent().getBooleanExtra(CHOOSE_RECENTLY_USED, false);
 		
 		backButtonStack = 0;
 		
@@ -62,7 +66,10 @@ public class FileDialog extends Activity
 		
 		selectBtn.setVisibility((selectDir)?View.VISIBLE:View.GONE);
 		
-		setCurrentDir(new File(getIntent().getStringExtra(START_PATH)));
+		if(!chooseRecentlyUsed)
+			setCurrentDir(new File(getIntent().getStringExtra(START_PATH)));
+		else
+			displayRecentlyUsed();
 		
 		fileList.setOnItemClickListener( new android.widget.AdapterView.OnItemClickListener()
 			{
@@ -70,7 +77,7 @@ public class FileDialog extends Activity
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 				{
 					File file = files.get(position);
-					if(file.isDirectory())
+					if(file.isDirectory() && !chooseRecentlyUsed)
 					{
 						backButtonStack++;
 						setCurrentDir(file);
@@ -85,9 +92,7 @@ public class FileDialog extends Activity
 						{
 //							Toast.makeText(this,"Selection must be a folder",Toast.LENGTH_SHORT).show();	
 						}
-						
 					}
-						
 				}
 			});
 			
@@ -194,6 +199,27 @@ public class FileDialog extends Activity
 		}
 		editor.commit();
 
+	}
+	
+	public void displayRecentlyUsed()
+	{
+		setTitle("Recently Used Javadocs");
+		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
+		filenames = new ArrayList<String>();
+		files = new ArrayList<File>();
+		for(int k=0;k<RECENTLY_USED_MAX;k++)
+		{
+			String item = prefs.getString(RECENTLY_USED_KEY+String.valueOf(k),"");
+			if(item.length() != 0)
+			{
+				filenames.add(item);
+				files.add(new File(item));
+			}
+				
+		}
+		listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filenames);
+		fileList.setAdapter(listAdapter);
+		
 	}
 	
 }

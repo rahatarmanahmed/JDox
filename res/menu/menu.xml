@@ -10,6 +10,8 @@
 						android:title="@string/loadArchive" />
 				<item 	android:id="@+id/loadFolder"
 						android:title="@string/loadFolder" />
+				<item	android:id="@+id/loadRecentlyUsed"
+				    	android:title="@string/loadRecentlyUsed" />
 			</menu>
 	</item>
 </menu>
