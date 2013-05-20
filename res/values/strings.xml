@@ -10,7 +10,8 @@
 	<string name="load">Load</string>
 	<string name="loadArchive">Load Archive</string>
 	<string name="loadFolder">Load Folder</string>
-	<string name="loadRecentlyUsed">Load Recently Used</string>
+	<string name="loadRecentlyUsed">Load Recently Opened</string>
+	<string name="recentlyUsedJavadocs">Recently Opened Javadocs</string>
 	<string name="recent">Recently Loaded</string>
 	<string name="filter_hint">Filter Classes</string>
 	

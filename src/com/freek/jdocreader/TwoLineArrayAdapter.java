@@ -5,6 +5,7 @@ import android.view.*;
 import android.widget.*;
 import java.util.*;
 
+//TODO: Make this take in an interface so it can be used on other objects
 public class TwoLineArrayAdapter extends ArrayAdapter<ListItem>
 {
 	Activity context;

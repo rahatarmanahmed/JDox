@@ -203,7 +203,7 @@ public class FileDialog extends Activity
 	
 	public void displayRecentlyUsed()
 	{
-		setTitle("Recently Used Javadocs");
+		setTitle(R.string.recentlyUsedJavadocs);
 		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
 		filenames = new ArrayList<String>();
 		files = new ArrayList<File>();
