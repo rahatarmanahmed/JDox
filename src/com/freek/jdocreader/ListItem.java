@@ -2,6 +2,7 @@ package com.freek.jdocreader;
 
 import java.io.*;
 
+@SuppressWarnings("serial")
 public class ListItem implements Serializable
 {
 	private String name, description, path;

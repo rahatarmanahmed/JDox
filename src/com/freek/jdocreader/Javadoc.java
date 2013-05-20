@@ -62,7 +62,7 @@ public class Javadoc implements Parcelable
 						items.add(new ListItem(name, desc, lePath));
 				}	
 				
-				if(!entry.isDirectory() && !entry.getName().toLowerCase().endsWith(".html") && !entry.getName().toLowerCase().endsWith(".mf"))
+				if(!entry.isDirectory() && !entry.getName().toLowerCase(Locale.getDefault()).endsWith(".html") && !entry.getName().toLowerCase().endsWith(".mf"))
 				{
 					InputStream stream = file.getInputStream(entry);
 					File out = new File(activity.getCacheDir(),entry.getName());

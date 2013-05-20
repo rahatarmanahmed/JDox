@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -160,16 +160,17 @@ public class FileDialog extends Activity
 	
 	public void returnResult(File f)
 	{
-		addToRecentlyOpened(f);
+		addToRecentlyOpened(this, f);
 		Intent result = new Intent();
 		result.putExtra(RESULT_URI,f.toURI().toString());
 		setResult(RESULT_OK,result);
 		finish();	
 	}
 	
-	public void addToRecentlyOpened(File f)
+	//TODO: this is quick and dirty way to update recently opened from the main activity, come up with something better later
+	public static void addToRecentlyOpened(Context c, File f)
 	{
-		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
+		SharedPreferences prefs = c.getSharedPreferences(MainActivity.JDOX_SHARED_PREFERENCES, MODE_PRIVATE);
 		String[] recentlyUsed = new String[RECENTLY_USED_MAX];
 		int alreadyExists = -1;
 		for(int k=0;k<recentlyUsed.length;k++)
@@ -203,7 +204,7 @@ public class FileDialog extends Activity
 	public void displayRecentlyUsed()
 	{
 		setTitle(R.string.recentlyUsedJavadocs);
-		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences(MainActivity.JDOX_SHARED_PREFERENCES, MODE_PRIVATE);
 		filenames = new ArrayList<String>();
 		files = new ArrayList<File>();
 		for(int k=0;k<RECENTLY_USED_MAX;k++)

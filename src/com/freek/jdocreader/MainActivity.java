@@ -2,7 +2,6 @@ package com.freek.jdocreader;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +23,8 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity
 {
-
+	public static final String JDOX_SHARED_PREFERENCES =  "come.freek.jdocreader.MainActivity.JDOX_SHARED_PREFERENCES";
+	
 	public static final String EXTRA_JDOC_PATH = "com.freek.jdocreader.MainActivity.EXTRA_JDOC_PATH";
 	public static final String EXTRA_INTERNAL_PATH = "com.freek.jdocreader.MainActivity.EXTRA_INTERNAL_PATH";
 	private static final String BUNDLE_JAVADOC = "com.freek.jdocreader.MainActivity.BUNDLE_JAVADOC";
@@ -36,7 +36,8 @@ public class MainActivity extends Activity
 	Javadoc jdoc;
 	
     /** Called when the activity is first created. */
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
@@ -99,6 +100,7 @@ public class MainActivity extends Activity
 			if(uri != null)
 			{
 				loadJavadoc(uri);
+				FileDialog.addToRecentlyOpened(this, new File(uri.getPath()));
 			}
 		}
     }
@@ -124,6 +126,7 @@ public class MainActivity extends Activity
 //		
 //	}
 	
+	@SuppressWarnings("rawtypes")
 	public void loadJavadoc(Uri uri)
 	{
 		try

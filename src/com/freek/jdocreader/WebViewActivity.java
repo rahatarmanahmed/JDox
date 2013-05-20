@@ -1,5 +1,6 @@
 package com.freek.jdocreader;
 
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.os.*;
 import android.view.*;
@@ -17,6 +18,7 @@ public class WebViewActivity extends Activity
 	File jdocDir;
 	String path;
 
+	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -132,7 +134,7 @@ public class WebViewActivity extends Activity
 						File htmlFile = new File(getCacheDir().toString() + "/"
 								+ fUrl);
 						Javadoc.writeStreamToFile(in, htmlFile);
-						webView.loadUrl("file://" + htmlFile.toURL().getPath()
+						webView.loadUrl("file://" + htmlFile.toURI().toURL().getPath()
 								+ fAnchor);
 					} catch (IOException e)
 					{
