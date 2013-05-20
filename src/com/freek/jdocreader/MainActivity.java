@@ -2,14 +2,17 @@ package com.freek.jdocreader;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -73,14 +76,30 @@ public class MainActivity extends Activity
 		
 		if(savedInstanceState != null)
 		{
+			
 			Javadoc temp = savedInstanceState.getParcelable(BUNDLE_JAVADOC);
 			if(temp != null)
 			{
 				jdoc = temp;
 				jdoc.setResults(list);
 				((TwoLineArrayAdapter)list.getAdapter()).getFilter().filter(searchField.getText().toString());
+				Log.d("JDOX","Returned from savedInstanceState");
 			}
 			
+		}
+		Intent intent = getIntent();
+		Log.d("JDOX","Received Intent in MainActivity" + 
+				"\n	Action: " + intent.getAction() + 
+				"\n	Categories: " + intent.getCategories() +
+				"\n	Data: " + intent.getData());
+		if(intent.getAction().equals(Intent.ACTION_VIEW))
+		{
+			
+			Uri uri = intent.getData();
+			if(uri != null)
+			{
+				loadJavadoc(uri);
+			}
 		}
     }
 	
@@ -105,11 +124,11 @@ public class MainActivity extends Activity
 //		
 //	}
 	
-	public void loadJavadoc(String path)
+	public void loadJavadoc(Uri uri)
 	{
 		try
 		{ 
-			jdoc = new Javadoc(this,path);
+			jdoc = new Javadoc(this,uri);
 			
 			jdoc.setResults(list);
 			((TwoLineArrayAdapter)list.getAdapter()).getFilter().filter(searchField.getText().toString());
@@ -179,8 +198,9 @@ public class MainActivity extends Activity
 		{
 			if(resultCode == Activity.RESULT_OK)
 			{
-				String path = (data.getStringExtra(FileDialog.RESULT_PATH));
-				loadJavadoc(path);
+				String uriString = (data.getStringExtra(FileDialog.RESULT_URI));
+				Uri uri = Uri.parse(uriString);
+				loadJavadoc(uri);
 			}
 			else
 			{

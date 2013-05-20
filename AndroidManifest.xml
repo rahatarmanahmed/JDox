@@ -3,30 +3,39 @@
     package="com.freek.jdocreader"
     android:versionCode="2"
     android:versionName="1.0.1" >
-	
-	<uses-permission android:name="android.permission.INTERNET"/>
-	
-    <uses-sdk 
-        android:minSdkVersion="5" 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        android:minSdkVersion="5"
         android:targetSdkVersion="17" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:allowBackup="true" >
+        android:label="@string/app_name" >
         <activity
-            android:label="@string/app_name"
-            android:name=".MainActivity" >
-            <intent-filter >
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="application/zip"/>
+                <data android:mimeType="application/java-archive"/>
+            </intent-filter>
         </activity>
-		<activity android:name="com.freek.jdocreader.WebViewActivity">
-		</activity>
-		<activity android:name="com.freek.jdocreader.FileDialog"
-				  android:theme="@style/DialogThemeSelector">
-		</activity>
-	</application>
+        <activity android:name="com.freek.jdocreader.WebViewActivity" >
+        </activity>
+        <activity
+            android:name="com.freek.jdocreader.FileDialog"
+            android:theme="@style/DialogThemeSelector" >
+        </activity>
+    </application>
 
 </manifest>

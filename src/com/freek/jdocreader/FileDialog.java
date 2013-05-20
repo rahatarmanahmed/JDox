@@ -29,7 +29,7 @@ public class FileDialog extends Activity
 	public static final String CHOOSE_RECENTLY_USED = "com.freek.jdocreader.FileDialog.CHOOSE_RECENTLY_USED";
 	
 	//result extras
-	public static final String RESULT_PATH = "com.freek.jdocreader.FileDialog.RESULT_PATH";
+	public static final String RESULT_URI = "com.freek.jdocreader.FileDialog.RESULT_URI";
 
 	//recently used SharedPreferences key
 	public static final String RECENTLY_USED_KEY = "com.freek.jdocreader.FileDialog.RECENTLY_USED_KEY";
@@ -162,7 +162,7 @@ public class FileDialog extends Activity
 	{
 		addToRecentlyOpened(f);
 		Intent result = new Intent();
-		result.putExtra(RESULT_PATH,f.getPath());
+		result.putExtra(RESULT_URI,f.toURI().toString());
 		setResult(RESULT_OK,result);
 		finish();	
 	}
@@ -195,7 +195,6 @@ public class FileDialog extends Activity
 		for(int k=0;k<recentlyUsed.length;k++)
 		{
 			editor.putString(RECENTLY_USED_KEY+String.valueOf(k),recentlyUsed[k]);
-			Log.d("JDOX", "Recently used #"+k+": "+recentlyUsed[k]);
 		}
 		editor.commit();
 

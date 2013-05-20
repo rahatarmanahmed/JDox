@@ -1,6 +1,7 @@
 package com.freek.jdocreader;
 
 import android.app.*;
+import android.net.Uri;
 import android.os.*;
 import android.widget.*;
 import java.io.*;
@@ -15,11 +16,11 @@ public class Javadoc implements Parcelable
 	String path;
 	Activity activity;
 	
-	public Javadoc(Activity activity, String path) throws IOException
+	public Javadoc(Activity activity, Uri uri) throws IOException
 	{
 		//TODO:just load classes by recursive directory search or find faster parser
 		items = new ArrayList<ListItem>();
-		this.path = path;
+		this.path = uri.getPath();
 		this.activity = activity;
 		
 		
