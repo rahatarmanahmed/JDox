@@ -41,7 +41,7 @@ public class FileDialog extends Activity
 	
 	
 	ListView fileList;
-	ArrayAdapter<String> listAdapter;
+	ArrayAdapter<?> listAdapter;
 	
 	Button selectBtn;
 	
@@ -217,7 +217,18 @@ public class FileDialog extends Activity
 			}
 				
 		}
-		listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filenames);
+		listAdapter = new TwoLineArrayAdapter<File>(this, files) {
+			@Override
+			public String getPrimaryText(File t)
+			{
+				return t.getName();
+			}
+			@Override
+			public String getSecondaryText(File t)
+			{
+				return t.getPath();
+			}
+		};
 		fileList.setAdapter(listAdapter);
 		
 	}

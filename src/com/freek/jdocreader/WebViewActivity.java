@@ -50,6 +50,7 @@ public class WebViewActivity extends Activity
 				}
 
 				// From http://stackoverflow.com/questions/5107651/android-disable-text-selection-in-a-webview
+				@SuppressWarnings("unused")
 				public void onSelectionStart(WebView view)
 				{
 					// By default we cancel the selection again, thus disabling

@@ -114,7 +114,21 @@ public class Javadoc implements Parcelable
 	
 	public void setResults(ListView list)
 	{
-		list.setAdapter(new TwoLineArrayAdapter((Activity)list.getContext(), items));
+		list.setAdapter(new TwoLineArrayAdapter<ListItem>((Activity)list.getContext(), items) {
+
+			@Override
+			public String getPrimaryText(ListItem t)
+			{
+				return t.getName();
+			}
+
+			@Override
+			public String getSecondaryText(ListItem t)
+			{
+				return t.getDescription();
+			}
+			
+		});
 	}
 	
 	public int describeContents()

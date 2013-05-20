@@ -6,10 +6,10 @@ import android.widget.*;
 import java.util.*;
 
 //TODO: Make this take in an interface so it can be used on other objects
-public class TwoLineArrayAdapter extends ArrayAdapter<ListItem>
+public abstract class TwoLineArrayAdapter<T> extends ArrayAdapter<T>
 {
 	Activity context;
-	public TwoLineArrayAdapter(Activity context, List<ListItem> items)
+	public TwoLineArrayAdapter(Activity context, List<T> items)
 	{
 		super(context, R.layout.listitem, items);
 		this.context = context;
@@ -28,9 +28,12 @@ public class TwoLineArrayAdapter extends ArrayAdapter<ListItem>
 		TextView label1 = (TextView)newView.findViewById(R.id.text1);
 		TextView label2 = (TextView)newView.findViewById(R.id.text2);
 		
-		label1.setText(this.getItem(position).getName());
-		label2.setText(this.getItem(position).getDescription());
+		label1.setText(getPrimaryText(this.getItem(position)));
+		label2.setText(getSecondaryText(this.getItem(position)));
 		
 		return newView;
 	}
+	
+	public abstract String getPrimaryText(T t);
+	public abstract String getSecondaryText(T t);
 }
