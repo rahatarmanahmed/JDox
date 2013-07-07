@@ -36,7 +36,6 @@ public class MainActivity extends Activity
 	Javadoc jdoc;
 	
     /** Called when the activity is first created. */
-    @SuppressWarnings("rawtypes")
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -67,7 +66,7 @@ public class MainActivity extends Activity
 				public void onTextChanged(CharSequence s, int start, int before, int count) 
 				{
 					if(list.getAdapter() != null)
-						((TwoLineArrayAdapter)list.getAdapter()).getFilter().filter(s);
+						filterList(s.toString());
 				}
 
 				@Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -83,7 +82,7 @@ public class MainActivity extends Activity
 			{
 				jdoc = temp;
 				jdoc.setResults(list);
-				((TwoLineArrayAdapter)list.getAdapter()).getFilter().filter(searchField.getText().toString());
+				filterList(searchField.getText().toString());
 				Log.d("JDOX","Returned from savedInstanceState");
 			}
 			
@@ -126,7 +125,6 @@ public class MainActivity extends Activity
 //		
 //	}
 	
-	@SuppressWarnings("rawtypes")
 	public void loadJavadoc(Uri uri)
 	{
 		try
@@ -134,12 +132,18 @@ public class MainActivity extends Activity
 			jdoc = new Javadoc(this,uri);
 			
 			jdoc.setResults(list);
-			((TwoLineArrayAdapter)list.getAdapter()).getFilter().filter(searchField.getText().toString());
+			filterList(searchField.getText().toString());
 	
 			} catch (IOException e) {
 			toast(R.string.invalid);
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	private void filterList(String s)
+	{
+		((TwoLineArrayAdapter<ListItem>)list.getAdapter()).getFuzzyFilter().filter(s);
 	}
 	
 	@Override 

@@ -33,7 +33,8 @@ public class ListItem implements Serializable
 	@Override
 	public String toString()
 	{
-		return name + " - " + description;	
+//		return name + " - " + description;	
+		return name; // This is used for fuzzy searching, don't want to use the description
 	}
 	
 	@Override

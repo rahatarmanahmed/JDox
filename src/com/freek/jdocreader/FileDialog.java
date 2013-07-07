@@ -3,7 +3,9 @@ package com.freek.jdocreader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -125,7 +127,15 @@ public class FileDialog extends Activity
 		}
 			
 		
-		Collections.sort(files);
+		Collections.sort(files, new Comparator<File>(){
+
+			@Override
+			public int compare(File lhs, File rhs)
+			{
+				return lhs.getName().toLowerCase(Locale.getDefault()).compareTo(rhs.getName().toLowerCase(Locale.getDefault()));
+			}
+			
+		});
 		
 		if(filenames == null)
 			filenames = new ArrayList<String>();
@@ -155,7 +165,7 @@ public class FileDialog extends Activity
 			setCurrentDir(currentDir.getParentFile()); //assuming first item is always parent
 		}
 		else
-			super.onBackPressed();
+			finish();
 	}
 	
 	public void returnResult(File f)
